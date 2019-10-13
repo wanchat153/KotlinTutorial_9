@@ -20,13 +20,7 @@ class MainActivity : AppCompatActivity(), GetRewData.OnDownloadComplete {
         setSupportActionBar(toolbar)
 
         val getRewData = GetRewData(this)
-       // getRewData.setDownloadCompleteListener(this)
         getRewData.execute("https://www.flickr.com/services/feeds/photos_public.gne?tags=android.oreo&format=json&nojsoncallback=1")
-
-//        fab.setOnClickListener { view ->
-//            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                .setAction("Action", null).show()
-//        }
         Log.d(TAG, "onCreate ends")
     }
 
