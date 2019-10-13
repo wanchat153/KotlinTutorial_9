@@ -9,7 +9,7 @@ import android.view.MenuItem
 
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), GetRewData.OnDownloadComplete {
 
     private val TAG = "MainActivity"
 
@@ -19,7 +19,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        val getRewData = GetRewData()
+        val getRewData = GetRewData(this)
+       // getRewData.setDownloadCompleteListener(this)
         getRewData.execute("https://www.flickr.com/services/feeds/photos_public.gne?tags=android.oreo&format=json&nojsoncallback=1")
 
 //        fab.setOnClickListener { view ->
@@ -46,7 +47,7 @@ class MainActivity : AppCompatActivity() {
 //        private const val TAG = "MainActivity"
 //    }
 
-    fun onDownloadComplete(data: String, status: DownloadStatus){
+    override fun onDownloadComplete(data: String, status: DownloadStatus){
         if (status == DownloadStatus.OK){
             Log.d(TAG, "onDownloadComplete called, data is $data")
         }else{

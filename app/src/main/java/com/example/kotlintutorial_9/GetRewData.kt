@@ -2,6 +2,7 @@ package com.example.kotlintutorial_9
 
 import android.os.AsyncTask
 import android.util.Log
+import android.view.View
 import java.io.IOException
 import java.lang.Exception
 import java.net.MalformedURLException
@@ -11,13 +12,24 @@ import java.net.URL
 enum class DownloadStatus{
     OK, IDLE, NOT_INITIALISED, FAILED_OR_EMPTY, PERMISSIONS_ERROR, ERROR
 }
-class GetRewData : AsyncTask<String, Void, String>(){
+class GetRewData(private val listener: OnDownloadComplete) : AsyncTask<String, Void, String>(){
 
     private val TAG = "GetRewData"
     private var downloadStatus = DownloadStatus.IDLE
 
-    override fun onPostExecute(result: String?) {
+    interface OnDownloadComplete{
+        fun onDownloadComplete(data: String, status: DownloadStatus)
+    }
+
+//    private var listener: MainActivity? = null
+//
+//    fun setDownloadCompleteListener(callbackObject: MainActivity){
+//        listener = callbackObject
+//    }
+
+    override fun onPostExecute(result: String) {
         Log.d(TAG, "onPostExecute called, parameter is $result")
+        listener.onDownloadComplete(result, downloadStatus)
     }
 
     override fun doInBackground(vararg params: String?): String {
