@@ -1,20 +1,22 @@
 package com.example.kotlintutorial_9
 
-import android.location.Criteria
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import java.lang.Exception
 
-class MainActivity : AppCompatActivity(), GetRewData.OnDownloadComplete, GetFlickrJsonData.OnDataAvailable {
+class MainActivity : AppCompatActivity(), GetRewData.OnDownloadComplete,
+    GetFlickrJsonData.OnDataAvailable,
+    RecyclerItemClickListener.OnRecyclerItemClickListener {
 
     private val TAG = "MainActivity"
     private val flickRecyclerViewAdaptor = FlickRecyclerViewAdaptor(ArrayList())
@@ -26,6 +28,7 @@ class MainActivity : AppCompatActivity(), GetRewData.OnDownloadComplete, GetFlic
         setSupportActionBar(toolbar)
 
         recycler_view.layoutManager = LinearLayoutManager(this)
+        recycler_view.addOnItemTouchListener(RecyclerItemClickListener(this, recycler_view, this))
         recycler_view.adapter = flickRecyclerViewAdaptor
 
         val url = createUri("https://www.flickr.com/services/feeds/photos_public.gne", "android.oreo", "en-us", true)
@@ -33,6 +36,17 @@ class MainActivity : AppCompatActivity(), GetRewData.OnDownloadComplete, GetFlic
         getRewData.execute(url)
         Log.d(TAG, "onCreate ends")
     }
+
+    override fun onItemClick(view: View, position: Int) {
+        Log.d(TAG, "onItemClick: starts")
+        Toast.makeText(this, "Normal tap at position $position", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun OnItemLongClick(view: View, position: Int) {
+        Log.d(TAG, "OnItemLongClick: starts")
+        Toast.makeText(this, "Long tap at position $position", Toast.LENGTH_SHORT).show()
+    }
+
     //baseURL: String, searchCriteria: String, lang: String, matchAll: Boolean): String
 
     private fun createUri(baseURL: String, searchCriteria: String, lang: String, matchAll: Boolean): String{

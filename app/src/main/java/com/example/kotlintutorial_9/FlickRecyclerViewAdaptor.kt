@@ -24,7 +24,7 @@ class FlickRecyclerViewAdaptor(private var photolist : List<Photo>): RecyclerVie
     }
 
     override fun getItemCount(): Int {
-        Log.d(TAG, ".getItemCount called")
+        //Log.d(TAG, ".getItemCount called")
         return if (photolist.isNotEmpty()) photolist.size else 0
     }
 
@@ -39,7 +39,7 @@ class FlickRecyclerViewAdaptor(private var photolist : List<Photo>): RecyclerVie
 
     override fun onBindViewHolder(holder: FlickRecyclerViewHolder, position: Int) {
         val photoItem = photolist[position]
-        Log.d(TAG, ".onBindViewHolder: ${photoItem.title} --> $position")
+        //Log.d(TAG, ".onBindViewHolder: ${photoItem.title} --> $position")
         Picasso.with(holder.thumbnail.context).load(photoItem.image)
             .error(R.drawable.placeholder)
             .placeholder(R.drawable.placeholder)
