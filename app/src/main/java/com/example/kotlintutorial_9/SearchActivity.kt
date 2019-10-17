@@ -3,6 +3,7 @@ package com.example.kotlintutorial_9
 import android.app.SearchManager
 import android.content.Context
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.util.Log
 import android.view.Menu
 import android.widget.SearchView
@@ -27,11 +28,25 @@ class SearchActivity : BaseActivity() {
         searchView = menu.findItem(R.id.app_bar_search).actionView as SearchView
         val searchableInfo = searchManager.getSearchableInfo(componentName)
         searchView?.setSearchableInfo(searchableInfo)
-        Log.d(TAG, ".onCreateOptionsMenu: $componentName")
-        Log.d(TAG, ".onCreateOptionsMenu: hint is ${searchView?.queryHint}")
-        Log.d(TAG, ".onCreateOptionsMenu: $searchableInfo")
+//        Log.d(TAG, ".onCreateOptionsMenu: $componentName")
+//        Log.d(TAG, ".onCreateOptionsMenu: hint is ${searchView?.queryHint}")
+//        Log.d(TAG, ".onCreateOptionsMenu: $searchableInfo")
 
         searchView?.isIconified = false
+
+        searchView?.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                Log.d(TAG, ".onQueryTextSubmit: called")
+
+                finish()
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false
+            }
+        })
+
         Log.d(TAG, ".onCreateOptionsMenu: returning")
         return true
     }

@@ -106,4 +106,9 @@ class MainActivity : BaseActivity(), GetRewData.OnDownloadComplete,
     override fun onError(exception: Exception) {
         Log.d(TAG, "onError called with ${exception.message}")
     }
+
+    override fun onResume() {
+        Log.e(TAG, ".onResume starts")
+        super.onResume()
+    }
 }
