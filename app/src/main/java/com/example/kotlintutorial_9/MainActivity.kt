@@ -3,6 +3,7 @@ package com.example.kotlintutorial_9
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -28,9 +29,6 @@ class MainActivity : BaseActivity(), GetRewData.OnDownloadComplete,
         recycler_view.addOnItemTouchListener(RecyclerItemClickListener(this, recycler_view, this))
         recycler_view.adapter = flickRecyclerViewAdaptor
 
-        val url = createUri("https://www.flickr.com/services/feeds/photos_public.gne", "android.oreo", "en-us", true)
-        val getRewData = GetRewData(this)
-        getRewData.execute(url)
         Log.d(TAG, "onCreate ends")
     }
 
@@ -110,5 +108,15 @@ class MainActivity : BaseActivity(), GetRewData.OnDownloadComplete,
     override fun onResume() {
         Log.e(TAG, ".onResume starts")
         super.onResume()
+
+        val sharedPref = PreferenceManager.getDefaultSharedPreferences(applicationContext)
+        val queryResult = sharedPref.getString(FLICKR_QUERY, "")
+
+        if (queryResult!!.isNotEmpty()){
+            val url = createUri("https://api.flickr.com/services/feeds/photos_public.gne", queryResult!!,"en-us", true)
+            val getRewData = GetRewData(this)
+            getRewData.execute(url)
+        }
+        Log.e(TAG, ".onResume: ends")
     }
 }
