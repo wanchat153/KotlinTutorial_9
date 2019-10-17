@@ -1,6 +1,5 @@
 package com.example.kotlintutorial_9
 
-import android.text.Layout
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 
 class FlickRecyclerViewHolder(view: View): RecyclerView.ViewHolder(view) {
     var thumbnail: ImageView = view.findViewById(R.id.thumbnail)
@@ -38,6 +38,13 @@ class FlickRecyclerViewAdaptor(private var photolist : List<Photo>): RecyclerVie
     }
 
     override fun onBindViewHolder(holder: FlickRecyclerViewHolder, position: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val photoItem = photolist[position]
+        Log.d(TAG, ".onBindViewHolder: ${photoItem.title} --> $position")
+        Picasso.with(holder.thumbnail.context).load(photoItem.image)
+            .error(R.drawable.placeholder)
+            .placeholder(R.drawable.placeholder)
+            .into(holder.thumbnail)
+
+        holder.title.text = photoItem.title
     }
 }
