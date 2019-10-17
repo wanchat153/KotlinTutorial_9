@@ -1,5 +1,7 @@
 package com.example.kotlintutorial_9
 
+import android.location.Criteria
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import com.google.android.material.snackbar.Snackbar
@@ -20,10 +22,26 @@ class MainActivity : AppCompatActivity(), GetRewData.OnDownloadComplete, GetFlic
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
+        val utl = createUri("https://www.flickr.com/services/feeds/photos_public.gne", "android.oreo", "en-us", true)
         val getRewData = GetRewData(this)
-        getRewData.execute("https://www.flickr.com/services/feeds/photos_public.gne?tags=android.oreo&format=json&nojsoncallback=1")
+        getRewData.execute(url)
         Log.d(TAG, "onCreate ends")
     }
+    //baseURL: String, searchCriteria: String, lang: String, matchAll: Boolean): String
+
+    private fun createUri(baseURL: String, searchCriteria: String, lang: String, matchAll: Boolean): String{
+        Log.d(TAG, ".createUrl starts")
+
+        return Uri.parse(baseURL).
+            buildUpon().
+            appendQueryParameter("tags", searchCriteria).
+            appendQueryParameter("tagmode", if (matchAll) "ALL" else "ANY").
+            appendQueryParameter("lang", lang).
+            appendQueryParameter("format", "json").
+            appendQueryParameter("nojsoncallback", "1").
+            build().toString()
+    }
+
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         Log.d(TAG, "onCreateOptionsMenu called")
