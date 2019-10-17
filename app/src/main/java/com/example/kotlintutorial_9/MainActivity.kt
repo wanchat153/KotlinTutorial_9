@@ -16,7 +16,7 @@ import java.lang.Exception
 
 class MainActivity : AppCompatActivity(), GetRewData.OnDownloadComplete,
     GetFlickrJsonData.OnDataAvailable,
-    RecyclerItemClickListener.OnRecyclerItemClickListener {
+    RecyclerItemClickListener.OnRecyclerClickListener {
 
     private val TAG = "MainActivity"
     private val flickRecyclerViewAdaptor = FlickRecyclerViewAdaptor(ArrayList())
