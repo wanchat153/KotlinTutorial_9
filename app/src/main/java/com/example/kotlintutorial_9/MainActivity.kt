@@ -8,13 +8,16 @@ import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.Menu
 import android.view.MenuItem
+import androidx.recyclerview.widget.LinearLayoutManager
 
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.content_main.*
 import java.lang.Exception
 
 class MainActivity : AppCompatActivity(), GetRewData.OnDownloadComplete, GetFlickrJsonData.OnDataAvailable {
 
     private val TAG = "MainActivity"
+    private val flickRecyclerViewAdaptor = FlickRecyclerViewAdaptor(ArrayList())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.d(TAG, "onCreate called")
@@ -22,7 +25,10 @@ class MainActivity : AppCompatActivity(), GetRewData.OnDownloadComplete, GetFlic
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        val utl = createUri("https://www.flickr.com/services/feeds/photos_public.gne", "android.oreo", "en-us", true)
+        recycler_view.layoutManager = LinearLayoutManager(this)
+        recycler_view.adapter = flickRecyclerViewAdaptor
+
+        val url = createUri("https://www.flickr.com/services/feeds/photos_public.gne", "android.oreo", "en-us", true)
         val getRewData = GetRewData(this)
         getRewData.execute(url)
         Log.d(TAG, "onCreate ends")
@@ -72,8 +78,8 @@ class MainActivity : AppCompatActivity(), GetRewData.OnDownloadComplete, GetFlic
     }
 
     override fun onDataAvailable(data: List<Photo>) {
-        Log.d(TAG, "onDataAvailable called, data is $data")
-
+        Log.d(TAG, "onDataAvailable called")
+        flickRecyclerViewAdaptor.loadNewData(data)
         Log.d(TAG, "onDataAvailable ends")
     }
 
