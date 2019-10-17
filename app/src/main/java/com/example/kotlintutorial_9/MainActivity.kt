@@ -4,18 +4,12 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.kotlintutorial9.BaseActivity
-import com.example.kotlintutorial9.PHOTO_TRANSFER
-
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
-import java.lang.Exception
 
 class MainActivity : BaseActivity(), GetRewData.OnDownloadComplete,
     GetFlickrJsonData.OnDataAvailable,
