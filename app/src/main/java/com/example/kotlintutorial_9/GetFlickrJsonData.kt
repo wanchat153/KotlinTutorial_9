@@ -15,10 +15,10 @@ class GetFlickrJsonData(private val listener: OnDataAvailable) : AsyncTask<Strin
         fun onError(exception: Exception)
     }
 
-    override fun onPostExecute(result: ArrayList<Photo>?) {
+    override fun onPostExecute(result: ArrayList<Photo>) {
         Log.d(TAG, "onPostExecute starts")
         super.onPostExecute(result)
-        listener.onDataAvailable(result!!)
+        listener.onDataAvailable(result)
         Log.d(TAG, "onPostExecute ends")
     }
 
@@ -48,7 +48,7 @@ class GetFlickrJsonData(private val listener: OnDataAvailable) : AsyncTask<Strin
             }
         }catch (e: JSONException){
             e.printStackTrace()
-            Log.d(TAG, ".doInBackground: Error processing Json data ${e.message}")
+            Log.e(TAG, ".doInBackground: Error processing Json data. ${e.message}")
             cancel(true)
             listener.onError(e)
         }

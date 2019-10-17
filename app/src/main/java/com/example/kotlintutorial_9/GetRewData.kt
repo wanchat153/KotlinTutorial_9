@@ -2,7 +2,6 @@ package com.example.kotlintutorial_9
 
 import android.os.AsyncTask
 import android.util.Log
-import android.view.View
 import java.io.IOException
 import java.lang.Exception
 import java.net.MalformedURLException
@@ -41,7 +40,7 @@ class GetRewData(private val listener: OnDownloadComplete) : AsyncTask<String, V
             downloadStatus = DownloadStatus.OK
             return URL(params[0]).readText()
         }catch (e: Exception){
-            val errorManage = when(e){
+            val errorMessage = when(e){
                 is MalformedURLException -> {
                     downloadStatus = DownloadStatus.NOT_INITIALISED
                     "doInBackground: Invalid URL ${e.message}"
@@ -58,8 +57,8 @@ class GetRewData(private val listener: OnDownloadComplete) : AsyncTask<String, V
                     "Unknown error: ${e.message}"
                 }
             }
-            Log.d(TAG, "errorMessage")
-            return errorManage
+            Log.e(TAG, "errorMessage")
+            return errorMessage
         }
     }
 }

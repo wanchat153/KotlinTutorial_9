@@ -51,6 +51,11 @@ class SearchActivity : BaseActivity() {
             }
         })
 
+        searchView?.setOnCloseListener {
+            finish()
+            false
+            false
+        }
         Log.d(TAG, ".onCreateOptionsMenu: returning")
         return true
     }
